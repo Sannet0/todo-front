@@ -1,6 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Task } from "../interface/task-interface";
 
+const tasks = [
+  {
+    text: 'first task-tile',
+    isCompleted: false
+  },
+  {
+    text: 'second task-tile',
+    isCompleted: true
+  }
+]
+
 @Injectable({
   providedIn: 'root'
 })
@@ -13,14 +24,3 @@ export class TaskService {
     return this.tasks;
   }
 }
-
-const tasks = [
-  {
-    text: 'first task',
-    isCompleted: false
-  },
-  {
-    text: 'second task',
-    isCompleted: true
-  }
-]
