@@ -17,7 +17,7 @@ export class TaskItemComponent implements OnInit {
   }
 
   onChangeCompletedStatus(id: string) {
-    const isCompleted = this.task?.isCompleted || false;
+    const isCompleted = this.task.isCompleted;
     this.taskService.changeCompletedStatus(id, isCompleted);
   }
 
