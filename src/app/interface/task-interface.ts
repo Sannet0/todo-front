@@ -1,5 +1,5 @@
 export interface Task {
-  id: string;
+  id: number;
   text: string;
   isCompleted: boolean;
 }

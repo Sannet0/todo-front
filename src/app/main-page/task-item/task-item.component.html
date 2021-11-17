@@ -1,1 +1,5 @@
-<p>{{ task.text }}</p>
+<div id="task-item">
+  <input type="checkbox" (change)="onChangeCompletedStatus(task.id, $event)" [checked]="task.isCompleted">
+  <p [id]="task.isCompleted ? 'tack-check' : 'tack-uncheck'">{{ task.text }}</p>
+  <input type="button" (click)="onDeleteTask(task.id)" value="X">
+</div>

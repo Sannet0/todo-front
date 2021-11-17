@@ -1,28 +1,26 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Task } from "../../interface/task-interface";
-import { TaskService } from "../../services/task.service";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Task } from '../../interface/task-interface';
+import { TaskService } from '../../services/task.service';
 
 @Component({
   selector: 'app-task-item',
   templateUrl: './task-item.component.html',
   styleUrls: ['./task-item.component.scss']
 })
-export class TaskItemComponent implements OnInit {
+export class TaskItemComponent{
   @Input() task: Task;
+  @Output() changeTask = new EventEmitter<void>();
 
   constructor(private taskService: TaskService) {}
 
-  onDeleteTask(id: string) {
+  onDeleteTask(id: number): void {
     this.taskService.deleteTask(id);
+    this.changeTask.emit();
   }
 
-  onChangeCompletedStatus(id: string) {
-    const isCompleted = this.task.isCompleted;
-    this.taskService.changeCompletedStatus(id, isCompleted);
-  }
-
-  ngOnInit(): void {
-
+  onChangeCompletedStatus(id: number, event: Event): void {
+    this.taskService.changeCompletedStatus(id, (event.target as HTMLInputElement).checked);
+    this.changeTask.emit();
   }
 
 }
