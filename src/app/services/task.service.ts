@@ -25,4 +25,12 @@ export class TaskService {
     this.tasks = [...tasks];
     return this.tasks;
   }
+
+  changeCompletedStatus(id: string, isCompleted: boolean) {
+
+  }
+
+  deleteTask(id: string) {
+
+  }
 }

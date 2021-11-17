@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Task } from "../../interface/task-interface";
+import { TaskService } from "../../services/task.service";
 
 @Component({
   selector: 'app-task-item',
@@ -6,10 +8,18 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./task-item.component.scss']
 })
 export class TaskItemComponent implements OnInit {
+  @Input() task: Task;
 
-  constructor() { }
+  constructor(private taskService: TaskService) {}
 
-  @Input() text: string | undefined
+  onDeleteTask(id: string) {
+    this.taskService.deleteTask(id);
+  }
+
+  onChangeCompletedStatus(id: string) {
+    const isCompleted = this.task?.isCompleted || false;
+    this.taskService.changeCompletedStatus(id, isCompleted);
+  }
 
   ngOnInit(): void {
 

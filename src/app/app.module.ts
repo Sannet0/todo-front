@@ -3,18 +3,16 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TaskListComponent } from './main-page/task-list/task-list.component';
-import { TaskItemComponent } from './main-page/task-item/task-item.component';
+import { MainPageModule } from "./main-page/main-page.module";
 
 @NgModule({
   declarations: [
     AppComponent,
-    TaskListComponent,
-    TaskItemComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MainPageModule
   ],
   providers: [],
   bootstrap: [AppComponent]
