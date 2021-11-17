@@ -3,11 +3,13 @@ import { Task } from "../interface/task-interface";
 
 const tasks = [
   {
-    text: 'first task-tile',
+    id: '1',
+    text: 'first task',
     isCompleted: false
   },
   {
-    text: 'second task-tile',
+    id: '2',
+    text: 'second task',
     isCompleted: true
   }
 ]
@@ -19,7 +21,7 @@ export class TaskService {
 
   tasks: Task[] = [];
 
-  getAll(): Task[]  {
+  getAll(): Task[] {
     this.tasks = [...tasks];
     return this.tasks;
   }

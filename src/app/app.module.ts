@@ -3,12 +3,14 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TaskComponent } from './components/task-tile/task.component';
+import { TaskListComponent } from './main-page/task-list/task-list.component';
+import { TaskItemComponent } from './main-page/task-item/task-item.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TaskComponent
+    TaskListComponent,
+    TaskItemComponent
   ],
   imports: [
     BrowserModule,
@@ -17,4 +19,4 @@ import { TaskComponent } from './components/task-tile/task.component';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

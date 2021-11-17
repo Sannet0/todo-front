@@ -4,12 +4,13 @@ import { Task } from "../../interface/task-interface";
 
 @Component({
   selector: 'app-task',
-  templateUrl: './task.component.html',
-  styleUrls: ['./task.component.scss']
+  templateUrl: './task-list.component.html',
+  styleUrls: ['./task-list.component.scss'],
 })
-export class TaskComponent implements OnInit {
+export class TaskListComponent implements OnInit {
 
-  constructor(private taskService: TaskService) { }
+  constructor(private taskService: TaskService) {}
+
   tasks: Task[] = [];
 
   ngOnInit(): void {
