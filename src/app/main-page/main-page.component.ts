@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { TaskService } from '../services/task.service';
 import { Task } from '../interface/task-interface';
 import { Options } from "../interface/options-interface";
-import { trigger } from "@angular/animations";
 
 @Component({
   selector: 'app-main-page',
@@ -11,20 +10,18 @@ import { trigger } from "@angular/animations";
 })
 export class MainPageComponent implements OnInit {
   tasks: Task[] = [];
+  currentTaskName = '';
   taskLeftCount: number;
   options: Options = {filter: 'all'}
   tasksCount: number;
 
   constructor(private taskService: TaskService) {}
 
-  addNewTask(event: Event): void {
-    const inputText = (event.target as HTMLInputElement).value;
-
-    if (inputText) {
-      (event.target as HTMLInputElement).value = '';
-      this.taskService.addNew(inputText);
+  addNewTask(): void {
+    if (this.currentTaskName) {
+      this.taskService.addNew(this.currentTaskName);
+      this.currentTaskName = '';
     }
-
     this.getTasksWithOptions();
   }
 
@@ -57,11 +54,10 @@ export class MainPageComponent implements OnInit {
 
   clearCompletedTasks(): void {
     this.taskService.deleteCompleted();
-    this.refreshTasks();
+    this.getTasksWithOptions();
   }
 
   ngOnInit(): void {
-    this.taskService.getAll();
     this.refreshTasks();
   }
 

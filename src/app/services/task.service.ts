@@ -1,74 +1,25 @@
 import { Injectable } from '@angular/core';
 import { Task } from '../interface/task-interface';
-
-const tasks = [
-  {
-    id: 0,
-    text: 'First task',
-    isCompleted: false
-  },
-  {
-    id: 1,
-    text: 'Second task',
-    isCompleted: true
-  },
-  {
-    id: 2,
-    text: 'Task',
-    isCompleted: true
-  },
-  {
-    id: 3,
-    text: 'Hello',
-    isCompleted: false
-  },
-  {
-    id: 4,
-    text: 'Kitty',
-    isCompleted: false
-  },
-  {
-    id: 5,
-    text: 'olololo',
-    isCompleted: false
-  },
-  {
-    id: 6,
-    text: 'olololo',
-    isCompleted: false
-  },
-  {
-    id: 7,
-    text: 'olololo',
-    isCompleted: false
-  },
-]
+// @ts-ignore
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
-
   tasks: Task[] = [];
-  tasksCount: number;
-
-  getAll(): Task[] {
-    this.tasks = [...tasks];
-    this.tasksCount = this.tasks.length;
-    return this.tasks;
-  }
+  tasksCount: number = 0;
 
   addNew(text: string): void {
-    const id = this.tasks.length;
     this.tasks.push({
-      id,
+      id: uuidv4(),
       text,
       isCompleted: false
     });
     this.tasksCount = this.tasks.length;
   }
 
-  changeCompletedStatus(id: number, isCompleted: boolean): void {
+  changeCompletedStatus(id: string, isCompleted: boolean): void {
     this.tasks.forEach((task: Task) => {
       if (task.id === id) {
         task.isCompleted = isCompleted;
@@ -76,7 +27,7 @@ export class TaskService {
     });
   }
 
-  deleteTask(id: number): void {
+  deleteTask(id: string): void {
     this.tasks = this.tasks.reduce((data: Task[], task: Task) => {
       if (task.id !== id) {
         data.push(task);
@@ -101,6 +52,7 @@ export class TaskService {
 
       return data;
     }, []);
+    this.tasksCount = this.tasks.length;
   }
 
   getByFilter(isCompleted: boolean): Task[] {

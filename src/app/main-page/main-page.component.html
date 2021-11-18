@@ -1,5 +1,5 @@
 <div id="task-block">
-  <input id="task-input" placeholder="Enter your task name here" (keyup.enter)="addNewTask($event)">
+  <input id="task-input" placeholder="Enter your task name here" [(ngModel)]="currentTaskName" (keyup.enter)="addNewTask()">
   <div id="task-list">
     <app-task-item *ngFor="let task of tasks" [task]="task" (changeTask)="refreshTasks()"></app-task-item>
   </div>
