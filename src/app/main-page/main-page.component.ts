@@ -13,9 +13,9 @@ export class MainPageComponent implements OnInit {
   tasks: Task[] = [];
   taskLeftCount: number;
   options: Options = {filter: 'all'}
+  tasksCount: number;
 
-  constructor(private taskService: TaskService) {
-  }
+  constructor(private taskService: TaskService) {}
 
   addNewTask(event: Event): void {
     const inputText = (event.target as HTMLInputElement).value;
@@ -25,11 +25,7 @@ export class MainPageComponent implements OnInit {
       this.taskService.addNew(inputText);
     }
 
-    this.refreshTasks();
-  }
-
-  getAllTasks(): void {
-    this.tasks = this.taskService.tasks;
+    this.getTasksWithOptions();
   }
 
   changeOptions(filter: string): void {
@@ -38,7 +34,7 @@ export class MainPageComponent implements OnInit {
 
   getTasksWithOptions(): void {
     if (this.options.filter === 'all') {
-      this.getAllTasks();
+      this.refreshTasks();
     }
     if (this.options.filter === 'todo') {
       this.tasks = this.taskService.getByFilter(false);
@@ -54,7 +50,8 @@ export class MainPageComponent implements OnInit {
   }
 
   refreshTasks(): void {
-    this.getAllTasks();
+    this.tasks = this.taskService.tasks;
+    this.tasksCount = this.taskService.tasksCount;
     this.taskLeftCount = this.taskService.taskLeft();
   }
 

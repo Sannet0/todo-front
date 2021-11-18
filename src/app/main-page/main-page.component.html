@@ -1,18 +1,24 @@
 <div id="task-block">
-  <input placeholder="Enter your task name here" (keyup.enter)="addNewTask($event)">
-  <div id="task-list" *ngFor="let task of tasks">
-    <app-task-item [task]="task" (changeTask)="refreshTasks()"></app-task-item>
+  <input id="task-input" placeholder="Enter your task name here" (keyup.enter)="addNewTask($event)">
+  <div id="task-list">
+    <app-task-item *ngFor="let task of tasks" [task]="task" (changeTask)="refreshTasks()"></app-task-item>
   </div>
-  <div id="task-bottom">
-    <div id="task-left" (click)="selectAllTasks()">{{taskLeftCount}} task left</div>
-    <div (change)="getTasksWithOptions()">
-      <label for="filter-all">All</label>
-      <input id="filter-all" type="radio" name="filter" [checked]="true" (click)="changeOptions('all')">
-      <label for="filter-todo">ToDo</label>
-      <input id="filter-todo" type="radio" name="filter" (click)="changeOptions('todo')">
-      <label for="filter-completed">Completed</label>
-      <input id="filter-completed" type="radio" name="filter" (click)="changeOptions('completed')">
+  <div *ngIf="tasksCount !== 0" id="task-bottom">
+    <div id="task-left" (click)="selectAllTasks()">{{taskLeftCount}} tasks left</div>
+    <div id="task-radio" (change)="getTasksWithOptions()">
+      <label for="filter-all">
+        <input id="filter-all" type="radio" name="filter" [checked]="true" (click)="changeOptions('all')">
+        <div>All</div>
+      </label>
+      <label for="filter-todo">
+        <input id="filter-todo" type="radio" name="filter" (click)="changeOptions('todo')">
+        <div>ToDo</div>
+      </label>
+      <label for="filter-completed">
+        <input id="filter-completed" type="radio" name="filter" (click)="changeOptions('completed')">
+        <div>Completed</div>
+      </label>
     </div>
-    <div *ngIf="taskLeftCount !== tasks.length" id="task-clear" (click)="clearCompletedTasks()">Clear completed</div>
+    <div *ngIf="taskLeftCount !== tasksCount" id="task-clear" (click)="clearCompletedTasks()">Clear completed</div>
   </div>
 </div>

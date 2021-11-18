@@ -1,10 +1,60 @@
 #task-item {
-  display: flex;
+  height: 56px;
+
+  border-bottom: 1px solid darkgrey;
+
   justify-items: center;
   align-items: center;
-  justify-content: space-between;
+
+  display: grid;
+  grid-template-columns: 10% 70% 20%;
+
+  label {
+    margin-left: 12px;
+
+    input {
+      display: none;
+    }
+
+    span {
+
+      border: 1px solid darkgrey;
+      border-radius: 25px;
+      padding: 0 3px 0 3px;
+      cursor: pointer;
+
+      height: 20px;
+      width: 20px;
+
+      svg {
+        height: 13px;
+        width: 14px;
+        fill: transparent;
+      }
+    }
+  }
+
+  label input:checked ~ span{
+    svg {
+      fill: green;
+    }
+  }
+
+  p {
+    font-size: 20px;
+    text-align: left;
+    width: 100%;
+  }
+
+  svg {
+    cursor: pointer;
+    fill: darkgrey;
+    height: 20px;
+    width: 20px;
+  }
 }
 
 #tack-check{
+  color: darkgrey;
   text-decoration: line-through;
 }

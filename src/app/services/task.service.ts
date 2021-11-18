@@ -4,14 +4,44 @@ import { Task } from '../interface/task-interface';
 const tasks = [
   {
     id: 0,
-    text: 'first task',
+    text: 'First task',
     isCompleted: false
   },
   {
     id: 1,
-    text: 'second task',
+    text: 'Second task',
     isCompleted: true
-  }
+  },
+  {
+    id: 2,
+    text: 'Task',
+    isCompleted: true
+  },
+  {
+    id: 3,
+    text: 'Hello',
+    isCompleted: false
+  },
+  {
+    id: 4,
+    text: 'Kitty',
+    isCompleted: false
+  },
+  {
+    id: 5,
+    text: 'olololo',
+    isCompleted: false
+  },
+  {
+    id: 6,
+    text: 'olololo',
+    isCompleted: false
+  },
+  {
+    id: 7,
+    text: 'olololo',
+    isCompleted: false
+  },
 ]
 
 @Injectable({
@@ -20,9 +50,11 @@ const tasks = [
 export class TaskService {
 
   tasks: Task[] = [];
+  tasksCount: number;
 
   getAll(): Task[] {
     this.tasks = [...tasks];
+    this.tasksCount = this.tasks.length;
     return this.tasks;
   }
 
@@ -33,6 +65,7 @@ export class TaskService {
       text,
       isCompleted: false
     });
+    this.tasksCount = this.tasks.length;
   }
 
   changeCompletedStatus(id: number, isCompleted: boolean): void {
@@ -51,6 +84,7 @@ export class TaskService {
 
       return data;
     }, []);
+    this.tasksCount = this.tasks.length;
   }
 
   selectAll() {
