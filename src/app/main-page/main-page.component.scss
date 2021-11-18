@@ -1,4 +1,4 @@
-#task-block {
+.task-block {
   display: flex;
   flex-direction: column;
 
@@ -7,16 +7,16 @@
   margin: 38px auto auto auto;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
 
-  #task-list {
+  .task-list {
     overflow: scroll;
     max-height: 345px;
   }
 
-  #task-list::-webkit-scrollbar {
+  .task-list::-webkit-scrollbar {
     display: none;
   }
 
-  #task-input {
+  .task-input {
     padding: 25px 20px 10px 20px;
     margin: 10px 20px 30px 20px;
     font-size: 20px;
@@ -24,12 +24,12 @@
     border-bottom: 1px solid darkgrey;
   }
 
-  #task-input:focus-visible {
+  .task-input:focus-visible {
     outline: 0;
   }
 }
 
-#task-bottom {
+.task-bottom {
   padding: 12px 0 17px 0;
 
   color: darkgrey;
@@ -39,13 +39,14 @@
 
   border-top: 1px solid darkgrey;
 
-  #task-left {
+  .task-left {
     padding-top: 5px;
     cursor: pointer;
   }
 
-  #task-radio {
+  .task-radio {
 
+    margin-top: 5px;
     display: grid;
     grid-template-columns: auto auto auto;
     justify-content: space-evenly;
@@ -56,21 +57,21 @@
         display: none;
       }
 
-      div {
+      span {
         padding: 5px;
         cursor: pointer;
         color: black;
       }
     }
 
-    label input:checked ~ div{
+    label input:checked ~ span{
       border: 1px solid darkgrey;
       border-radius: 3px;
       padding: 4px;
     }
   }
 
-  #task-clear {
+  .task-clear {
     padding-top: 5px;
     cursor: pointer;
   }

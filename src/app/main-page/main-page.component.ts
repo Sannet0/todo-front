@@ -31,7 +31,7 @@ export class MainPageComponent implements OnInit {
 
   getTasksWithOptions(): void {
     if (this.options.filter === 'all') {
-      this.refreshTasks();
+      this.tasks = this.taskService.tasks;
     }
     if (this.options.filter === 'todo') {
       this.tasks = this.taskService.getByFilter(false);
@@ -39,26 +39,31 @@ export class MainPageComponent implements OnInit {
     if (this.options.filter === 'completed') {
       this.tasks = this.taskService.getByFilter(true);
     }
+
+    this.refreshCounts();
   }
 
   selectAllTasks(): void {
     this.taskService.selectAll();
-    this.refreshTasks();
+    this.getTasksWithOptions();
   }
 
-  refreshTasks(): void {
-    this.tasks = this.taskService.tasks;
+  refreshCounts(): void {
     this.tasksCount = this.taskService.tasksCount;
     this.taskLeftCount = this.taskService.taskLeft();
   }
 
   clearCompletedTasks(): void {
     this.taskService.deleteCompleted();
+    this.refreshCounts();
+    if (this.tasksCount === 0) {
+      this.options.filter = 'all';
+    }
     this.getTasksWithOptions();
   }
 
   ngOnInit(): void {
-    this.refreshTasks();
+    this.getTasksWithOptions();
   }
 
 }
