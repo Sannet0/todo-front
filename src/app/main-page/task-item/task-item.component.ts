@@ -7,7 +7,7 @@ import { TaskService } from '../../services/task.service';
   templateUrl: './task-item.component.html',
   styleUrls: ['./task-item.component.scss']
 })
-export class TaskItemComponent{
+export class TaskItemComponent {
   @Input() task: Task;
   @Output() changeTask = new EventEmitter<void>();
 

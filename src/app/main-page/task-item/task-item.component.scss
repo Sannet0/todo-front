@@ -34,7 +34,7 @@
     }
   }
 
-  label input:checked ~ span{
+  label input:checked ~ span {
     svg {
       fill: green;
     }
@@ -54,7 +54,7 @@
   }
 }
 
-#tack-check{
+#tack-check {
   color: darkgrey;
   text-decoration: line-through;
 }

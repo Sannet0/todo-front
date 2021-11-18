@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Task } from '../interface/task-interface';
-// @ts-ignore
 import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
@@ -8,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 })
 export class TaskService {
   tasks: Task[] = [];
-  tasksCount: number = 0;
+  tasksCount = 0;
 
   addNew(text: string): void {
     this.tasks.push({
@@ -23,6 +22,7 @@ export class TaskService {
     this.tasks.forEach((task: Task) => {
       if (task.id === id) {
         task.isCompleted = isCompleted;
+        return;
       }
     });
   }
@@ -45,7 +45,7 @@ export class TaskService {
   }
 
   deleteCompleted() {
-    this.tasks = [...this.tasks].reduce((data: Task[], task: Task) => {
+    this.tasks = this.tasks.reduce((data: Task[], task: Task) => {
       if (!task.isCompleted) {
         data.push(task);
       }
@@ -56,7 +56,7 @@ export class TaskService {
   }
 
   getByFilter(isCompleted: boolean): Task[] {
-    return [...this.tasks].reduce((data: Task[], task: Task) => {
+    return this.tasks.reduce((data: Task[], task: Task) => {
       if (task.isCompleted === isCompleted) {
         data.push(task);
       }
