@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TaskService } from '../services/task.service';
 import { Task } from '../interface/task-interface';
-import { Options } from "../interface/options-interface";
+import { Options } from '../interface/options-interface';
 
 @Component({
   selector: 'app-main-page',
@@ -12,7 +12,7 @@ export class MainPageComponent implements OnInit {
   tasks: Task[] = [];
   currentTaskName = '';
   taskLeftCount: number;
-  options: Options = {filter: 'all'}
+  options: Options = {filter: 'all'};
   tasksCount: number;
 
   constructor(private taskService: TaskService) {}

@@ -8,7 +8,7 @@ describe('TaskComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MainPageComponent ]
+      declarations: [MainPageComponent]
     })
     .compileComponents();
   });
