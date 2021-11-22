@@ -1,76 +1,54 @@
 import { Injectable } from '@angular/core';
 import { Task } from '../interface/task-interface';
 import { v4 as uuidv4 } from 'uuid';
+import {
+  addNewTaskAction,
+  changeTaskStatusAction,
+  deleteTaskAction,
+  selectAllTaskAction,
+  deleteCompletedTaskAction
+} from '../state/tasks/tasks.actions';
+import { Store } from '@ngrx/store';
+import { tasks } from '../state/tasks/tasks.selector';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
-  tasks: Task[] = [];
-  tasksCount = 0;
+  tasks$ = this.store.select(tasks);
+  tasks: Task[];
 
-  addNew(text: string): void {
-    this.tasks.push({
-      id: uuidv4(),
-      text,
-      isCompleted: false
+  constructor(private store: Store<{ tasks: Task[] }>) {
+    this.tasks$.subscribe((tasks: Task[]) => {
+      this.tasks = tasks;
     });
-    this.tasksCount = this.tasks.length;
   }
 
-  changeCompletedStatus(id: string, isCompleted: boolean): void {
-    this.tasks.forEach((task: Task) => {
-      if (task.id === id) {
-        task.isCompleted = isCompleted;
-        return;
-      }
-    });
+  addNew(text: string): void {
+    this.store.dispatch(addNewTaskAction({task: {
+        id: uuidv4(),
+        text,
+        isCompleted: false
+      }}));
+  }
+
+  changeStatus(id: string, isCompleted: boolean): void {
+    this.store.dispatch(changeTaskStatusAction({id, isCompleted}));
   }
 
   deleteTask(id: string): void {
-    this.tasks = this.tasks.reduce((data: Task[], task: Task) => {
-      if (task.id !== id) {
-        data.push(task);
-      }
-
-      return data;
-    }, []);
-    this.tasksCount = this.tasks.length;
+    this.store.dispatch(deleteTaskAction({id}));
   }
 
   selectAll() {
-    this.tasks.forEach((task: Task) => {
-      task.isCompleted = true;
-    });
+    this.store.dispatch(selectAllTaskAction());
   }
 
   deleteCompleted() {
-    this.tasks = this.tasks.reduce((data: Task[], task: Task) => {
-      if (!task.isCompleted) {
-        data.push(task);
-      }
-
-      return data;
-    }, []);
-    this.tasksCount = this.tasks.length;
+    this.store.dispatch(deleteCompletedTaskAction());
   }
 
   getByFilter(isCompleted: boolean): Task[] {
-    return this.tasks.reduce((data: Task[], task: Task) => {
-      if (task.isCompleted === isCompleted) {
-        data.push(task);
-      }
-
-      return data;
-    }, []);
-  }
-
-  taskLeft(): number {
-    return this.tasks.reduce((count: number, task: Task) => {
-      if (!task.isCompleted) {
-        count++;
-      }
-      return count;
-    }, 0);
+    return this.tasks.filter(task => task.isCompleted === isCompleted);
   }
 }
