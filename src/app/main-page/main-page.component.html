@@ -1,11 +1,11 @@
 <div class="task-block">
   <input class="task-input" placeholder="Enter your task name here" [(ngModel)]="currentTaskName" (keyup.enter)="addNewTask()">
   <div class="task-list">
-    <app-task-item *ngFor="let task of tasks" [task]="task" (changeTask)="getTasksWithOptions()"></app-task-item>
+    <app-task-item *ngFor="let task of filteredTasks" [task]="task"></app-task-item>
   </div>
-  <div *ngIf="tasksCount !== 0" class="task-bottom">
-    <div class="task-left" (click)="selectAllTasks()">{{taskLeftCount}} tasks left</div>
-    <div class="task-radio" (change)="getTasksWithOptions()">
+  <div class="task-bottom" *ngIf="tasksCount !== 0">
+    <div class="task-left" (click)="selectAllTasks()">{{tasksLeftCount}} tasks left</div>
+    <div class="task-radio">
       <label for="filter-all">
         <input id="filter-all" type="radio" name="filter" [checked]="true" (click)="changeOptions('all')">
         <span>All</span>
@@ -19,6 +19,6 @@
         <span>Completed</span>
       </label>
     </div>
-    <div *ngIf="taskLeftCount !== tasksCount" class="task-clear" (click)="clearCompletedTasks()">Clear completed</div>
+    <div *ngIf="tasksLeftCount !== tasksCount" class="task-clear" (click)="clearCompletedTasks()">Clear completed</div>
   </div>
 </div>

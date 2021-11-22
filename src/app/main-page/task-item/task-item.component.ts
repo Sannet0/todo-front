@@ -9,18 +9,15 @@ import { TaskService } from '../../services/task.service';
 })
 export class TaskItemComponent {
   @Input() task: Task;
-  @Output() changeTask = new EventEmitter<void>();
 
   constructor(private taskService: TaskService) {}
 
   onDeleteTask(id: string): void {
     this.taskService.deleteTask(id);
-    this.changeTask.emit();
   }
 
   onChangeCompletedStatus(id: string, event: Event): void {
-    this.taskService.changeCompletedStatus(id, (event.target as HTMLInputElement).checked);
-    this.changeTask.emit();
+    this.taskService.changeStatus(id, (event.target as HTMLInputElement).checked);
   }
 
 }

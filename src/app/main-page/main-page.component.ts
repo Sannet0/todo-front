@@ -2,68 +2,64 @@ import { Component, OnInit } from '@angular/core';
 import { TaskService } from '../services/task.service';
 import { Task } from '../interface/task-interface';
 import { Options } from '../interface/options-interface';
+import { Store } from '@ngrx/store';
+import { tasks } from '../state/tasks/tasks.selector';
 
 @Component({
   selector: 'app-main-page',
   templateUrl: './main-page.component.html',
   styleUrls: ['./main-page.component.scss'],
 })
-export class MainPageComponent implements OnInit {
-  tasks: Task[] = [];
+export class MainPageComponent {
+  tasks$ = this.store.select(tasks);
+  tasks: Task[];
+  filteredTasks: Task[];
   currentTaskName = '';
-  taskLeftCount: number;
+  tasksLeftCount: number;
   options: Options = {filter: 'all'};
   tasksCount: number;
 
-  constructor(private taskService: TaskService) {}
+  constructor(private taskService: TaskService, private store: Store<{ tasks: Task[] }>) {
+    this.tasks$.subscribe((tasks: Task[]) => {
+      this.tasksCount = tasks.length;
+      this.tasksLeftCount = tasks.length - tasks.filter(task => task.isCompleted).length;
+      this.tasks = tasks;
+      this.setFilteredTasks();
+    });
+  }
 
   addNewTask(): void {
-    if (this.currentTaskName) {
+    if (this.currentTaskName.trim()) {
       this.taskService.addNew(this.currentTaskName);
-      this.currentTaskName = '';
     }
-    this.getTasksWithOptions();
+    this.currentTaskName = '';
   }
 
   changeOptions(filter: string): void {
     this.options.filter = filter;
+    this.setFilteredTasks();
   }
 
-  getTasksWithOptions(): void {
+  setFilteredTasks(): void {
     if (this.options.filter === 'all') {
-      this.tasks = this.taskService.tasks;
+      this.filteredTasks = this.tasks;
     }
     if (this.options.filter === 'todo') {
-      this.tasks = this.taskService.getByFilter(false);
+      this.filteredTasks = this.taskService.getByFilter(false);
     }
     if (this.options.filter === 'completed') {
-      this.tasks = this.taskService.getByFilter(true);
+      this.filteredTasks = this.taskService.getByFilter(true);
     }
-
-    this.refreshCounts();
   }
 
   selectAllTasks(): void {
     this.taskService.selectAll();
-    this.getTasksWithOptions();
-  }
-
-  refreshCounts(): void {
-    this.tasksCount = this.taskService.tasksCount;
-    this.taskLeftCount = this.taskService.taskLeft();
   }
 
   clearCompletedTasks(): void {
     this.taskService.deleteCompleted();
-    this.refreshCounts();
     if (this.tasksCount === 0) {
       this.options.filter = 'all';
     }
-    this.getTasksWithOptions();
   }
-
-  ngOnInit(): void {
-    this.getTasksWithOptions();
-  }
-
 }
