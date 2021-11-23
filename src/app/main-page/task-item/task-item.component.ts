@@ -12,11 +12,11 @@ export class TaskItemComponent {
 
   constructor(private taskService: TaskService) {}
 
-  onDeleteTask(id: string): void {
+  onDeleteTask(id: number): void {
     this.taskService.deleteTask(id);
   }
 
-  onChangeCompletedStatus(id: string, event: Event): void {
+  onChangeCompletedStatus(id: number, event: Event): void {
     this.taskService.changeStatus(id, (event.target as HTMLInputElement).checked);
   }
 

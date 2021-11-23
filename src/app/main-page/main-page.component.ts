@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TaskService } from '../services/task.service';
 import { Task } from '../interface/task-interface';
-import { Options } from '../interface/options-interface';
+import { IOption } from '../interface/option-interface';
 import { Store } from '@ngrx/store';
 import { tasks } from '../state/tasks/tasks.selector';
 
@@ -10,22 +10,29 @@ import { tasks } from '../state/tasks/tasks.selector';
   templateUrl: './main-page.component.html',
   styleUrls: ['./main-page.component.scss'],
 })
-export class MainPageComponent {
+export class MainPageComponent implements OnInit {
   tasks$ = this.store.select(tasks);
   tasks: Task[];
   filteredTasks: Task[];
   currentTaskName = '';
   tasksLeftCount: number;
-  options: Options = {filter: 'all'};
+  option: IOption = {filter: 'all'};
   tasksCount: number;
 
   constructor(private taskService: TaskService, private store: Store<{ tasks: Task[] }>) {
     this.tasks$.subscribe((tasks: Task[]) => {
       this.tasksCount = tasks.length;
-      this.tasksLeftCount = tasks.length - tasks.filter(task => task.isCompleted).length;
+      if (this.tasksCount === 0) {
+        this.option.filter = 'all';
+      }
+      this.tasksLeftCount = tasks.length - tasks.filter(task => task.isComplete).length;
       this.tasks = tasks;
       this.setFilteredTasks();
     });
+  }
+
+  ngOnInit(): void {
+    this.taskService.getAll();
   }
 
   addNewTask(): void {
@@ -36,18 +43,18 @@ export class MainPageComponent {
   }
 
   changeOptions(filter: string): void {
-    this.options.filter = filter;
+    this.option.filter = filter;
     this.setFilteredTasks();
   }
 
   setFilteredTasks(): void {
-    if (this.options.filter === 'all') {
+    if (this.option.filter === 'all') {
       this.filteredTasks = this.tasks;
     }
-    if (this.options.filter === 'todo') {
+    if (this.option.filter === 'todo') {
       this.filteredTasks = this.taskService.getByFilter(false);
     }
-    if (this.options.filter === 'completed') {
+    if (this.option.filter === 'completed') {
       this.filteredTasks = this.taskService.getByFilter(true);
     }
   }
@@ -58,8 +65,5 @@ export class MainPageComponent {
 
   clearCompletedTasks(): void {
     this.taskService.deleteCompleted();
-    if (this.tasksCount === 0) {
-      this.options.filter = 'all';
-    }
   }
 }

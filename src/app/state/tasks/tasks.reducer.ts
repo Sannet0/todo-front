@@ -4,7 +4,7 @@ import {
   changeTaskStatusAction,
   deleteCompletedTaskAction,
   deleteTaskAction,
-  selectAllTaskAction
+  selectAllTaskAction, setOriginTasksTaskAction
 } from './tasks.actions';
 import { initialState } from './tasks.model';
 
@@ -12,15 +12,21 @@ export const tasksStateKey = 'tasks';
 
 export const tasksReducer = createReducer(
   initialState,
-  on(addNewTaskAction, (state, { task }) => {
+  on(setOriginTasksTaskAction, (state, {tasks}) => {
+    return {
+      ...state,
+      tasks
+    };
+  }),
+  on(addNewTaskAction, (state, {task}) => {
     const newTasks = [...state.tasks, task];
     return {
       ...state,
       tasks: newTasks
     };
   }),
-  on(changeTaskStatusAction, (state, {id, isCompleted}) => {
-    const newTasks = state.tasks.map((task) => task.id === id ? {...task, isCompleted} : task);
+  on(changeTaskStatusAction, (state, {id, isComplete}) => {
+    const newTasks = state.tasks.map((task) => task.id === id ? {...task, isComplete} : task);
     return {
       ...state,
       tasks: newTasks
@@ -35,7 +41,7 @@ export const tasksReducer = createReducer(
   }),
   on(selectAllTaskAction, (state) => {
     const newTasks = state.tasks.map((task) => {
-      return {...task, isCompleted: true};
+      return {...task, isComplete: true};
     });
     return {
       ...state,
@@ -43,7 +49,7 @@ export const tasksReducer = createReducer(
     };
   }),
   on(deleteCompletedTaskAction, (state) => {
-    const newTasks = state.tasks.filter((task) => !task.isCompleted);
+    const newTasks = state.tasks.filter((task) => !task.isComplete);
     return {
       ...state,
       tasks: newTasks
