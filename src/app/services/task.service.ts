@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Task } from '../interface/task-interface';
-import { v4 as uuidv4 } from 'uuid';
 import {
-  addNewTaskAction,
-  changeTaskStatusAction,
-  deleteTaskAction,
-  selectAllTaskAction,
-  deleteCompletedTaskAction, setOriginTasksTaskAction
+  loadTasks,
+  addTask,
+  changeTaskStatus,
+  deleteTask,
+  deleteCompletedTask,
+  selectAllTask
 } from '../state/tasks/tasks.actions';
 import { Store } from '@ngrx/store';
 import { tasks } from '../state/tasks/tasks.selector';
@@ -26,39 +26,27 @@ export class TaskService {
   }
 
   getAll(): void {
-    this.apiService.getAllTasks().subscribe(data => {
-      this.store.dispatch(setOriginTasksTaskAction({ tasks: data }));
-    });
+    this.store.dispatch(loadTasks());
   }
 
   addNew(text: string): void {
-    this.apiService.addNewTask(text).subscribe(data => {
-      this.store.dispatch(addNewTaskAction({ task: data }));
-    });
+    this.store.dispatch(addTask({ text }));
   }
 
   changeStatus(id: number, isComplete: boolean): void {
-    this.apiService.changeTaskStatus(id, isComplete).subscribe(data => {
-      this.store.dispatch(changeTaskStatusAction({ id, isComplete }));
-    });
+    this.store.dispatch(changeTaskStatus({ id, isComplete }));
   }
 
   deleteTask(id: number): void {
-    this.apiService.deleteTask(id).subscribe(() => {
-      this.store.dispatch(deleteTaskAction({ id }));
-    });
+    this.store.dispatch(deleteTask({ id }));
   }
 
   selectAll() {
-    this.apiService.completeAllTasks().subscribe(() => {
-      this.store.dispatch(selectAllTaskAction());
-    });
+    this.store.dispatch(selectAllTask());
   }
 
   deleteCompleted() {
-    this.apiService.deleteCompleteTasks().subscribe(() => {
-      this.store.dispatch(deleteCompletedTaskAction());
-    });
+    this.store.dispatch(deleteCompletedTask());
   }
 
   getByFilter(isCompleted: boolean): Task[] {
