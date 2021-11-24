@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Task } from '../../interface/task-interface';
-import { TaskService } from '../../services/task.service';
+import { TaskStateFacadeService } from '../../services/task-state-facade.service';
 
 @Component({
   selector: 'app-task-item',
@@ -10,7 +10,7 @@ import { TaskService } from '../../services/task.service';
 export class TaskItemComponent {
   @Input() task: Task;
 
-  constructor(private taskService: TaskService) {}
+  constructor(private taskService: TaskStateFacadeService) {}
 
   onDeleteTask(id: number): void {
     this.taskService.deleteTask(id);

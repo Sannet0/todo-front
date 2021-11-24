@@ -28,9 +28,9 @@ export const tasksReducer = createReducer(
       tasks: newTasks
     };
   }),
-  on(changeTaskStatusSuccess, (state, {id, isComplete}) => {
+  on(changeTaskStatusSuccess, (state, {id, isCompleted}) => {
     console.log('changeTaskStatusSuccess');
-    const newTasks = state.tasks.map((task) => task.id === id ? {...task, isComplete} : task);
+    const newTasks = state.tasks.map((task) => task.id === id ? {...task, isCompleted} : task);
     return {
       ...state,
       tasks: newTasks
@@ -47,7 +47,7 @@ export const tasksReducer = createReducer(
   on(selectAllTaskSuccess, (state) => {
     console.log('selectAllTaskSuccess');
     const newTasks = state.tasks.map((task) => {
-      return {...task, isComplete: true};
+      return {...task, isCompleted: true};
     });
     return {
       ...state,
@@ -56,7 +56,7 @@ export const tasksReducer = createReducer(
   }),
   on(deleteCompletedTaskSuccess, (state) => {
     console.log('deleteCompletedTaskSuccess');
-    const newTasks = state.tasks.filter((task) => !task.isComplete);
+    const newTasks = state.tasks.filter((task) => !task.isCompleted);
     return {
       ...state,
       tasks: newTasks

@@ -29,8 +29,8 @@ export class TasksEffects {
 
   changeTaskStatus$ = createEffect(() => this.actions$.pipe(
     ofType(TaskActions.changeTaskStatus),
-    mergeMap(({ id, isComplete }) => this.apiService.changeTaskStatus(id, isComplete).pipe(
-        map(() => TaskActions.changeTaskStatusSuccess({ id, isComplete }))
+    mergeMap(({ id, isCompleted }) => this.apiService.changeTaskStatus(id, isCompleted).pipe(
+        map(() => TaskActions.changeTaskStatusSuccess({ id, isCompleted }))
       )
     )
   ));

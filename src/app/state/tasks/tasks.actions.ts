@@ -22,12 +22,12 @@ export const addTaskSuccess = createAction(
 
 export const changeTaskStatus = createAction(
   '[Tasks] Change task status',
-  props<{ id: number; isComplete: boolean }>()
+  props<{ id: number; isCompleted: boolean }>()
 );
 
 export const changeTaskStatusSuccess = createAction(
   '[Tasks] Change task status successfully',
-  props<{ id: number; isComplete: boolean }>()
+  props<{ id: number; isCompleted: boolean }>()
 );
 
 export const deleteTask = createAction(

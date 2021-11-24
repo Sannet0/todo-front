@@ -17,8 +17,7 @@ import { TasksEffects } from './state/tasks/tasks.effects';
     AppRoutingModule,
     MainPageModule,
     StateModule,
-    HttpClientModule,
-    EffectsModule.forRoot([TasksEffects])
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
