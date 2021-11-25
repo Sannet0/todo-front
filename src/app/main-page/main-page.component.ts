@@ -1,31 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { TaskService } from '../services/task.service';
-import { Task } from '../interface/task-interface';
-import { Options } from '../interface/options-interface';
-import { Store } from '@ngrx/store';
-import { tasks } from '../state/tasks/tasks.selector';
+import { FilterType, TaskStateFacadeService } from '../services/task-state-facade.service';
 
 @Component({
   selector: 'app-main-page',
   templateUrl: './main-page.component.html',
   styleUrls: ['./main-page.component.scss'],
 })
-export class MainPageComponent {
-  tasks$ = this.store.select(tasks);
-  tasks: Task[];
-  filteredTasks: Task[];
+export class MainPageComponent implements OnInit {
+  filterType = FilterType;
   currentTaskName = '';
-  tasksLeftCount: number;
-  options: Options = {filter: 'all'};
-  tasksCount: number;
+  taskCount$ = this.taskService.taskCount$;
+  tasksLeftCount$ = this.taskService.tasksLeftCount$;
+  filteredTasks$ = this.taskService.filteredTasks$;
+  constructor(private taskService: TaskStateFacadeService) {
+  }
 
-  constructor(private taskService: TaskService, private store: Store<{ tasks: Task[] }>) {
-    this.tasks$.subscribe((tasks: Task[]) => {
-      this.tasksCount = tasks.length;
-      this.tasksLeftCount = tasks.length - tasks.filter(task => task.isCompleted).length;
-      this.tasks = tasks;
-      this.setFilteredTasks();
-    });
+  ngOnInit(): void {
+    this.taskService.getAll();
   }
 
   addNewTask(): void {
@@ -35,31 +26,17 @@ export class MainPageComponent {
     this.currentTaskName = '';
   }
 
-  changeOptions(filter: string): void {
-    this.options.filter = filter;
-    this.setFilteredTasks();
+  changeOptions(type: FilterType): void {
+    this.taskService.setFilterType(type);
   }
 
-  setFilteredTasks(): void {
-    if (this.options.filter === 'all') {
-      this.filteredTasks = this.tasks;
-    }
-    if (this.options.filter === 'todo') {
-      this.filteredTasks = this.taskService.getByFilter(false);
-    }
-    if (this.options.filter === 'completed') {
-      this.filteredTasks = this.taskService.getByFilter(true);
-    }
-  }
 
   selectAllTasks(): void {
     this.taskService.selectAll();
   }
 
   clearCompletedTasks(): void {
+    this.taskService.setFilterType(FilterType.all);
     this.taskService.deleteCompleted();
-    if (this.tasksCount === 0) {
-      this.options.filter = 'all';
-    }
   }
 }
