@@ -9,7 +9,7 @@ import { TasksEffects } from './tasks/tasks.effects';
   imports: [
     StoreModule.forRoot(reducers),
     EffectsModule.forRoot([TasksEffects]),
-    StoreDevtoolsModule.instrument({})
+    StoreDevtoolsModule.instrument({}),
   ]
 })
 export class StateModule {}

@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MainPageComponent } from './main-page.component';
+import { HttpClientModule } from '@angular/common/http';
+import { StoreModule } from '@ngrx/store';
+import { reducers } from '../state/state.model';
 
 describe('TaskComponent', () => {
   let component: MainPageComponent;
@@ -8,7 +11,11 @@ describe('TaskComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MainPageComponent]
+      declarations: [MainPageComponent],
+      imports: [
+        HttpClientModule,
+        StoreModule.forRoot(reducers)
+      ]
     })
     .compileComponents();
   });

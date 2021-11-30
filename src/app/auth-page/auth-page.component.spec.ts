@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TaskItemComponent } from './task-item.component';
+import { AuthPageComponent } from './auth-page.component';
 
-describe('TaskItemComponent', () => {
-  let component: TaskItemComponent;
-  let fixture: ComponentFixture<TaskItemComponent>;
+describe('AuthPageComponent', () => {
+  let component: AuthPageComponent;
+  let fixture: ComponentFixture<AuthPageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TaskItemComponent]
+      declarations: [AuthPageComponent]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TaskItemComponent);
+    fixture = TestBed.createComponent(AuthPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

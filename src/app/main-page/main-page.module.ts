@@ -15,7 +15,6 @@ import { TaskItemComponent } from './task-item/task-item.component';
   ],
   exports: [
     MainPageComponent
-  ],
-  providers: [],
+  ]
 })
 export class MainPageModule {}
