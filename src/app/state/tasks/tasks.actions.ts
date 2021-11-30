@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Task } from '../../interface/task-interface';
+import { ITask } from '../../interface/task-interface';
 
 export const loadTasks = createAction(
   '[Tasks] Load tasks'
@@ -7,7 +7,7 @@ export const loadTasks = createAction(
 
 export const loadTasksSuccess = createAction(
   '[Tasks] Load tasks successfully',
-  props<{ tasks: Task[] }>()
+  props<{ tasks: ITask[] }>()
 );
 
 export const addTask = createAction(
@@ -17,7 +17,7 @@ export const addTask = createAction(
 
 export const addTaskSuccess = createAction(
   '[Tasks] Add task successfully',
-  props<{ task: Task }>()
+  props<{ task: ITask }>()
 );
 
 export const changeTaskStatus = createAction(

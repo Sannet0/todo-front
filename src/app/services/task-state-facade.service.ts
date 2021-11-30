@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Task } from '../interface/task-interface';
+import { ITask } from '../interface/task-interface';
 import {
   loadTasks,
   addTask,
@@ -24,7 +24,7 @@ export enum FilterType {
   providedIn: 'root'
 })
 export class TaskStateFacadeService {
-  constructor(private apiService: ApiService, private store: Store<{ tasks: Task[] }>) {
+  constructor(private apiService: ApiService, private store: Store<{ tasks: ITask[] }>) {
   }
 
   private filterType$ = new BehaviorSubject<FilterType>(FilterType.all);
@@ -63,7 +63,7 @@ export class TaskStateFacadeService {
     this.store.dispatch(deleteCompletedTask());
   }
 
-  private filterTasksExpression(task: Task, type: FilterType): boolean {
+  private filterTasksExpression(task: ITask, type: FilterType): boolean {
     if (type === FilterType.all) {
       return true;
     }

@@ -1,7 +1,7 @@
-import { Task } from '../../interface/task-interface';
+import { ITask } from '../../interface/task-interface';
 
 export interface ITasksState {
-  tasks: Task[];
+  tasks: ITask[];
 }
 
 export const initialState: ITasksState = {

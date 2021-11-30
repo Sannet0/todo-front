@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpService } from './http.service';
-import { Task } from '../interface/task-interface';
+import { ITask } from '../interface/task-interface';
 
 @Injectable({
   providedIn: 'root'
@@ -10,11 +10,11 @@ export class ApiService {
 
   constructor(private httpService: HttpService) { }
 
-  getAllTasks(): Observable<Task[]> {
+  getAllTasks(): Observable<ITask[]> {
     return this.httpService.get('tasks');
   }
 
-  addNewTask(text: string): Observable<Task> {
+  addNewTask(text: string): Observable<ITask> {
     return this.httpService.post('task', { text });
   }
 
@@ -32,5 +32,13 @@ export class ApiService {
 
   deleteCompleteTasks(): Observable<number> {
     return this.httpService.delete('tasks/complete');
+  }
+
+  login(login: string, password: string): Observable<any> {
+    return this.httpService.post('user/login', { login, password });
+  }
+
+  registration(login: string, password: string): Observable<any> {
+    return this.httpService.post('user/registration', { login, password });
   }
 }

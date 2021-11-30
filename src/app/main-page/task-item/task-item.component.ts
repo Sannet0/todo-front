@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Task } from '../../interface/task-interface';
+import { ITask } from '../../interface/task-interface';
 import { TaskStateFacadeService } from '../../services/task-state-facade.service';
 
 @Component({
@@ -8,7 +8,7 @@ import { TaskStateFacadeService } from '../../services/task-state-facade.service
   styleUrls: ['./task-item.component.scss']
 })
 export class TaskItemComponent {
-  @Input() task: Task;
+  @Input() task: ITask;
 
   constructor(private taskService: TaskStateFacadeService) {}
 
